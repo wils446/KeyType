@@ -1,0 +1,11 @@
+.word-canvas {
+    border-radius: 0.75rem;
+    background-color: white;
+    width: 100%;
+}
+
+.words {
+    font-family: "Courier New", Courier, monospace;
+    text-align: justify;
+    text-justify: inter-word;
+}
