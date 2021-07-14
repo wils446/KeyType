@@ -3,6 +3,7 @@ import "./App.css";
 import { indonesianWords } from "./words";
 import WordCanvas from "./components/WordCanvas";
 import InputType from "./components/inputType";
+import { Route, BrowserRouter as Router } from "react-router-dom";
 
 function App(): JSX.Element {
     const [inputValue, setInputValue] = React.useState("");
@@ -103,17 +104,19 @@ function App(): JSX.Element {
     };
 
     return (
-        <React.Fragment>
-            <div className="App">
-                <div className="container">
-                    <div className=" display-1 mb-5 ">KeyType</div>
-                    <WordCanvas html={html} words={words} />
-                    <InputType currentInputValue={inputValue} changeHandler={inputChangeHandler} />
-                    <h5 className="mb-3">{convertTimeFormat()}</h5>
-                    <h3>Score : {currentScore ? currentScore : ""}</h3>
+        <Router>
+            <Route path="/keytype">
+                <div className="App">
+                    <div className="container">
+                        <div className=" display-1 mb-5 ">KeyType</div>
+                        <WordCanvas html={html} words={words} />
+                        <InputType currentInputValue={inputValue} changeHandler={inputChangeHandler} />
+                        <h5 className="mb-3">{convertTimeFormat()}</h5>
+                        <h3>Score : {currentScore ? currentScore : ""}</h3>
+                    </div>
                 </div>
-            </div>
-        </React.Fragment>
+            </Route>
+        </Router>
     );
 }
 
