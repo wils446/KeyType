@@ -14,6 +14,7 @@ export default function InputType({ changeHandler, currentInputValue }: InputTyp
                 onChange={(ev) => {
                     changeHandler(ev.target.value);
                 }}
+                onPaste={(e) => e.preventDefault()}
                 className="input-form"
                 value={currentInputValue}
             />
