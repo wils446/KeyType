@@ -14,8 +14,8 @@ export default function LineChart({ data }: lineChartProps) {
             {
                 label: "CPM",
                 data: data,
-                fill: false,
-                backgroundColor: "#FF0000",
+                fill: true,
+                backgroundColor: "rgba(0,0,0, 0.2)",
                 borderColor: "#FF0000",
                 tension: 0.3,
             },
@@ -42,6 +42,25 @@ export default function LineChart({ data }: lineChartProps) {
         elements: {
             point: {
                 radius: 2,
+            },
+        },
+        responsive: true,
+        hover: {
+            mode: "nearest",
+            intersect: true,
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function (items) {
+                        let titles = [];
+                        for (const { dataIndex } of items) {
+                            titles.push(`time : ${dataIndex + 1}s`);
+                        }
+                        return titles.join(" ");
+                    },
+                },
+                intersect: false,
             },
         },
     };
