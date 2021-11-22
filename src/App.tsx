@@ -18,10 +18,14 @@ function App() {
 
     const [wrongCount, setWrongCount] = React.useState(0);
     const [characterPerMinutes, setWordPerMinutes] = React.useState<number[]>([]);
-    const characterPerMinute: number = React.useMemo(() => {
-        if (20 - countDown === 0) return 0;
-        return parseInt((inputValue.length / ((20 - countDown) / 60)).toFixed());
-    }, [countDown]);
+    const characterPerMinute: number = React.useMemo(
+        () => {
+            if (20 - countDown === 0) return 0;
+            return parseInt((inputValue.length / ((20 - countDown) / 60)).toFixed());
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [countDown]
+    );
 
     const inputChangeHandler = (str: string) => {
         if (!isPlaying) startGame();
@@ -93,6 +97,7 @@ function App() {
         setShowScore(true); // show score
     }, [timer]);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     React.useEffect(cpmUpdate, [countDown]);
     React.useEffect(realtimeCheck, [inputValue, words]);
     React.useEffect(timerCheck, [countDown, stopGame]);
