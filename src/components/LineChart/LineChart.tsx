@@ -7,7 +7,6 @@ type lineChartProps = {
 
 export default function LineChart({ data }: lineChartProps) {
     data.shift();
-    console.log(data);
     const chartData: ChartData<"line"> = {
         labels: data.map((d, i) => i + 1),
         datasets: [
