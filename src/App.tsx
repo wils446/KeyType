@@ -3,6 +3,7 @@ import "./App.css";
 import { generateWords } from "./common/utils/generateWords";
 import Typing from "./views/Typing";
 import ScoreDisplay from "./views/ScoreDisplay";
+import { useDisplayWords } from "./hooks";
 
 function App() {
     const [isPlaying, setIsPlaying] = React.useState(false);
@@ -14,7 +15,7 @@ function App() {
 
     const [inputValue, setInputValue] = React.useState("");
     const [words, setWords] = React.useState(generateWords(language, length));
-    const [html, setHtml] = React.useState("");
+    const [html, setHtml] = useDisplayWords(words, inputValue);
 
     const [wrongCount, setWrongCount] = React.useState(0);
     const [characterPerMinutes, setWordPerMinutes] = React.useState<number[]>([]);
@@ -35,26 +36,13 @@ function App() {
             return;
         }
 
+        setHtml(str);
         setInputValue(str);
     };
 
     const langChangeHandler = (str: string) => {
         setLanguage(str);
         nextGame();
-    };
-
-    const realtimeCheck = () => {
-        let currentHtml = "";
-        for (let i = 0; i < words.length; i++) {
-            if (inputValue[i] === undefined)
-                currentHtml += `<span class="${inputValue.length === i ? "underline font-black" : "text-gray-500"}">${
-                    words[i]
-                }</span>`;
-            else {
-                currentHtml += `<span class="text-black">${words[i]}</span>`;
-            }
-        }
-        setHtml(currentHtml);
     };
 
     const cpmUpdate = () => {
@@ -79,11 +67,11 @@ function App() {
         setShowScore(false);
         setInputValue("");
         setWords(generateWords(language, length));
-        setHtml("");
         setWrongCount(0);
         setIsPlaying(false);
         setWordPerMinutes([]);
         setCountDown(20);
+        setHtml("");
     };
 
     const startGame = () => {
@@ -99,7 +87,6 @@ function App() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     React.useEffect(cpmUpdate, [countDown]);
-    React.useEffect(realtimeCheck, [inputValue, words]);
     React.useEffect(timerCheck, [countDown, stopGame]);
 
     return (
