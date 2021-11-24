@@ -9,6 +9,8 @@ type TypingProps = {
     inputChangeHandler: (str: string) => void;
     langChangeHandler: (str: string) => void;
     restart: () => void;
+    theme: string;
+    themeChangeHandler: () => void;
 };
 
 export default function Typing({
@@ -19,13 +21,22 @@ export default function Typing({
     langChangeHandler,
     isPlaying,
     restart,
+    theme,
+    themeChangeHandler,
 }: TypingProps) {
     return (
         <div className="vertical-middle fade-in fade-out">
             <div className="table w-full">
                 <div className="table-row">
-                    <div className="table-cell">
-                        <LangOptions changeHandler={langChangeHandler} />
+                    <div className="table-cell text-left">
+                        <div className="inline-block pr-1">
+                            <button className="dark:text-white" onClick={() => themeChangeHandler()}>
+                                {theme === "light" ? "darkmode" : "lightmode"}
+                            </button>
+                        </div>
+                        <div className="inline-block px-1">
+                            <LangOptions changeHandler={langChangeHandler} />
+                        </div>
                     </div>
                     <div className="table-cell"></div>
                     <div

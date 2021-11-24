@@ -48,6 +48,10 @@ function App() {
         setInputValue(str);
     };
 
+    const themeChangeHandler = () => {
+        setTheme(theme === "light" ? "dark" : "light");
+    };
+
     const langChangeHandler = (str: string) => {
         setLanguage(str);
         nextGame();
@@ -118,6 +122,8 @@ function App() {
                             countDown={countDown}
                             langChangeHandler={langChangeHandler}
                             restart={nextGame}
+                            theme={theme}
+                            themeChangeHandler={themeChangeHandler}
                         />
                     )}
                 </div>
