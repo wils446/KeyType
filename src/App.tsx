@@ -7,6 +7,7 @@ import { useDisplayWords } from "./hooks";
 
 function App() {
     const [isPlaying, setIsPlaying] = React.useState(false);
+    const [isWrong, setIsWrong] = React.useState(false);
     const [showScore, setShowScore] = React.useState(false);
     const [language, setLanguage] = React.useState("indonesia");
     const [length] = React.useState(30);
@@ -32,10 +33,15 @@ function App() {
         if (!isPlaying) startGame();
         if (inputValue.length === words.length - 1) stopGame(); // to check if all text already typed stop game
         if (str[str.length - 1] !== words[str.length - 1]) {
-            setWrongCount(wrongCount + 1);
+            if (!isWrong) {
+                setIsWrong(true);
+                setWrongCount(wrongCount + 1);
+                return;
+            }
             return;
         }
 
+        setIsWrong(false);
         setHtml(str);
         setInputValue(str);
     };
