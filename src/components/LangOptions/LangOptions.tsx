@@ -15,7 +15,12 @@ export default function LangOptions({ changeHandler }: LangOptionsProps) {
 
     return (
         <div className="text-left">
-            <select name="" onChange={(e) => changeHandler(e.target.value)} id="">
+            <select
+                name=""
+                className="dark:bg-gray-900 dark:color-white dark:text-white"
+                onChange={(e) => changeHandler(e.target.value)}
+                id=""
+            >
                 {Options}
             </select>
         </div>

@@ -3,9 +3,11 @@ import "./App.css";
 import { generateWords } from "./common/utils/generateWords";
 import Typing from "./views/Typing";
 import ScoreDisplay from "./views/ScoreDisplay";
-import { useDisplayWords } from "./hooks";
+import { useDisplayWords, useDarkMode } from "./hooks";
 
 function App() {
+    const [theme, setTheme] = useDarkMode();
+
     const [isPlaying, setIsPlaying] = React.useState(false);
     const [isWrong, setIsWrong] = React.useState(false);
     const [showScore, setShowScore] = React.useState(false);
@@ -96,27 +98,29 @@ function App() {
     React.useEffect(timerCheck, [countDown, stopGame]);
 
     return (
-        <div className="App">
-            <div className="container mx-auto h-screen">
-                <h1 className="text-6xl font-bold mb-8">KeyType</h1>
-                {showScore ? (
-                    <ScoreDisplay
-                        nextGame={nextGame}
-                        cpm={characterPerMinutes}
-                        wrongCount={wrongCount}
-                        inputLength={inputValue.length}
-                    />
-                ) : (
-                    <Typing
-                        isPlaying={isPlaying}
-                        inputValue={inputValue}
-                        inputChangeHandler={inputChangeHandler}
-                        html={html}
-                        countDown={countDown}
-                        langChangeHandler={langChangeHandler}
-                        restart={nextGame}
-                    />
-                )}
+        <div className={theme}>
+            <div className="App bg-white dark:bg-gray-900">
+                <div className="container mx-auto h-screen">
+                    <h1 className="text-6xl pt-2 font-bold mb-8 dark:text-white">KeyType</h1>
+                    {showScore ? (
+                        <ScoreDisplay
+                            nextGame={nextGame}
+                            cpm={characterPerMinutes}
+                            wrongCount={wrongCount}
+                            inputLength={inputValue.length}
+                        />
+                    ) : (
+                        <Typing
+                            isPlaying={isPlaying}
+                            inputValue={inputValue}
+                            inputChangeHandler={inputChangeHandler}
+                            html={html}
+                            countDown={countDown}
+                            langChangeHandler={langChangeHandler}
+                            restart={nextGame}
+                        />
+                    )}
+                </div>
             </div>
         </div>
     );

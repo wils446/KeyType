@@ -15,7 +15,7 @@ export default function LineChart({ data }: lineChartProps) {
                 data: data,
                 fill: true,
                 backgroundColor: "rgba(0,0,0, 0.2)",
-                borderColor: "#FF0000",
+                borderColor: "#3B82F6",
                 tension: 0.3,
             },
         ],

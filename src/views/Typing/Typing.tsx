@@ -29,7 +29,9 @@ export default function Typing({
                     </div>
                     <div className="table-cell"></div>
                     <div
-                        className={`table-cell text-2xl text-right font-medium ${countDown <= 5 ? "text-red-600" : ""}`}
+                        className={`table-cell text-2xl text-right font-medium ${
+                            countDown <= 5 ? "text-red-600" : "dark:text-white"
+                        }`}
                     >
                         {countDown}
                     </div>
@@ -37,7 +39,7 @@ export default function Typing({
             </div>
             <DisplayWords html={html} />
             <input
-                className="focus:outline-none text-center border-b-2 border-black w-full"
+                className="focus:outline-none text-center border-b-2 border-black w-full dark:bg-gray-900 dark:border-gray-200 dark:text-gray-200"
                 type="text"
                 value={inputValue}
                 onChange={(e) => inputChangeHandler(e.target.value)}

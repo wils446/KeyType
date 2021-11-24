@@ -4,11 +4,11 @@ const realtimeCheck = (words: string, inputValue: string) => {
     let currentHtml = "";
     for (let i = 0; i < words.length; i++) {
         if (inputValue[i] === undefined)
-            currentHtml += `<span class="${inputValue.length === i ? "underline font-black" : "text-gray-500"}">${
-                words[i]
-            }</span>`;
+            currentHtml += `<span class="${
+                inputValue.length === i ? "underline font-black dark:text-white" : "text-gray-500"
+            }">${words[i]}</span>`;
         else {
-            currentHtml += `<span class="text-black">${words[i]}</span>`;
+            currentHtml += `<span class="text-black dark:text-white">${words[i]}</span>`;
         }
     }
     return currentHtml;
