@@ -23,7 +23,6 @@ export default function useDisplayWords(
 
     React.useEffect(
         () => {
-            console.log(1);
             setHtml(realtimeCheck(words, input));
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
