@@ -98,7 +98,6 @@ function App() {
                         nextGame={nextGame}
                         cpm={characterPerMinutes}
                         wrongCount={wrongCount}
-                        words={words}
                         inputLength={inputValue.length}
                     />
                 ) : (

@@ -4,11 +4,10 @@ type ScoreDisplayProps = {
     nextGame: () => void;
     cpm: number[];
     wrongCount: number;
-    words: string;
     inputLength: number;
 };
 
-export default function ScoreDisplay({ nextGame, cpm, wrongCount, words, inputLength }: ScoreDisplayProps) {
+export default function ScoreDisplay({ nextGame, cpm, wrongCount, inputLength }: ScoreDisplayProps) {
     return (
         <div className="mt-1/3">
             <div className="px-52">
