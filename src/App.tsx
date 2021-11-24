@@ -104,7 +104,7 @@ function App() {
     return (
         <div className={theme}>
             <div className="App bg-white dark:bg-gray-900">
-                <div className="container mx-auto h-screen">
+                <div className="container mx-auto h-screen invisible md:visible">
                     <h1 className="text-6xl pt-2 font-bold mb-8 dark:text-white">KeyType</h1>
                     {showScore ? (
                         <ScoreDisplay
