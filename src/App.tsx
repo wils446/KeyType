@@ -94,7 +94,13 @@ function App() {
             <div className="container mx-auto h-screen">
                 <h1 className="text-6xl font-bold mb-8">KeyType</h1>
                 {showScore ? (
-                    <ScoreDisplay nextGame={nextGame} cpm={characterPerMinutes} wrongCount={wrongCount} words={words} />
+                    <ScoreDisplay
+                        nextGame={nextGame}
+                        cpm={characterPerMinutes}
+                        wrongCount={wrongCount}
+                        words={words}
+                        inputLength={inputValue.length}
+                    />
                 ) : (
                     <Typing
                         isPlaying={isPlaying}
