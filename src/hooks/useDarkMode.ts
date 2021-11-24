@@ -6,7 +6,7 @@ const getTheme = () => {
     return theme ? theme : "light";
 };
 
-export default function useDarkMode() {
+export default function useDarkMode(): [string, React.Dispatch<React.SetStateAction<string>>] {
     const [theme, setTheme] = React.useState(() => {
         return getTheme();
     });
