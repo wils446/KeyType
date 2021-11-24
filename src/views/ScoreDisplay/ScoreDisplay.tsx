@@ -16,7 +16,7 @@ export default function ScoreDisplay({ nextGame, cpm, wrongCount, inputLength }:
                     <h1 className="text-3xl font-bold inline">CPM : {cpm[cpm.length - 1]} </h1>
                     <h1 className="text-3xl font-bold inline">Wrong : {wrongCount}</h1>
                     <h1 className="text-3xl font-bold inline">
-                        Accuracy : {((inputLength / (inputLength + wrongCount)) * 100).toFixed() + "%"}
+                        Accuracy : {((inputLength / (inputLength + wrongCount)) * 100).toFixed(1) + "%"}
                     </h1>
                 </div>
                 <br />
