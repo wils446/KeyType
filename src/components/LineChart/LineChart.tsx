@@ -61,6 +61,9 @@ export default function LineChart({ data }: lineChartProps) {
                 },
                 intersect: false,
             },
+            legend: {
+                display: false,
+            },
         },
     };
 
