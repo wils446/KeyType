@@ -94,12 +94,16 @@ export const reducer = (state: State, action: Action): State => {
                 isPlaying: false,
                 isWrong: false,
                 showScore: false,
-                language: payload.language ? payload.language : state.language,
+                language:
+                    payload && payload.language
+                        ? payload.language
+                        : state.language,
                 length: 30,
                 words: newWords,
-                countdown: payload.countdown
-                    ? payload.countdown
-                    : state.countdown,
+                countdown:
+                    payload && payload.countdown
+                        ? payload.countdown
+                        : state.countdown,
                 characterPerMinutes: [],
                 wrongCount: 0,
             };
