@@ -1,0 +1,6 @@
+.main {
+    @apply text-center;
+    @apply h-screen;
+    @apply grid;
+    @apply grid-rows-6;
+}
