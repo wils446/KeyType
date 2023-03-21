@@ -1,5 +1,5 @@
 import { Action, ActionKind, State } from "@/store/store";
-import { Dispatch, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import ReactModal from "react-modal";
 
 type Props = {
@@ -9,6 +9,7 @@ type Props = {
     dispatch: Dispatch<Action>;
     restartDisplayWords?: (words: string) => void;
     resetTimer?: (timer?: number) => void;
+    setLocalConfig: Dispatch<SetStateAction<State>>;
 };
 
 const Setting: React.FC<Props> = ({
@@ -18,13 +19,10 @@ const Setting: React.FC<Props> = ({
     dispatch,
     resetTimer,
     restartDisplayWords,
+    setLocalConfig,
 }) => {
-    const [countdownTemporary, setCountdownTemporary] = useState<number>(
-        state.countdown
-    );
-    const [languageTemporary, setLanguageTemporary] = useState<string>(
-        state.language
-    );
+    const [countdownTemporary, setCountdownTemporary] = useState<number>(state.countdown);
+    const [languageTemporary, setLanguageTemporary] = useState<string>(state.language);
 
     const restartGame = () => {
         resetTimer!(countdownTemporary);
@@ -70,17 +68,11 @@ const Setting: React.FC<Props> = ({
                                     return (
                                         <button
                                             key={index}
-                                            onClick={() =>
-                                                setCountdownTemporary(timer)
-                                            }
+                                            onClick={() => setCountdownTemporary(timer)}
                                             className={`${
-                                                countdownTemporary === timer
-                                                    ? ""
-                                                    : "opacity-75"
+                                                countdownTemporary === timer ? "" : "opacity-75"
                                             } hover:opacity-100`}
-                                            disabled={
-                                                timer === countdownTemporary
-                                            }
+                                            disabled={timer === countdownTemporary}
                                         >
                                             {timer}
                                         </button>
@@ -94,9 +86,7 @@ const Setting: React.FC<Props> = ({
                         <div className="w-2/5">
                             <select
                                 className="bg-transparent outline text-right outline-gray-200 outline-2 rounded-lg px-2 py-0.5 w-full"
-                                onChange={(e) =>
-                                    setLanguageTemporary(e.target.value)
-                                }
+                                onChange={(e) => setLanguageTemporary(e.target.value)}
                                 name=""
                                 id=""
                             >
@@ -105,8 +95,7 @@ const Setting: React.FC<Props> = ({
                                     .map((lang, index) => {
                                         return (
                                             <option key={index} value={lang}>
-                                                {lang[0].toUpperCase() +
-                                                    lang.substring(1)}
+                                                {lang[0].toUpperCase() + lang.substring(1)}
                                             </option>
                                         );
                                     })}
@@ -117,21 +106,15 @@ const Setting: React.FC<Props> = ({
                 <div className="text-white w-full flex justify-center space-x-5">
                     <button
                         onClick={async () => {
-                            if (
-                                languageTemporary &&
-                                languageTemporary !== state.language
-                            )
+                            if (languageTemporary && languageTemporary !== state.language)
                                 dispatch({
                                     type: ActionKind.SetLanguage,
-                                    payload: { language: languageTemporary },
+                                    payload: { language: languageTemporary, setLocalConfig },
                                 });
-                            if (
-                                countdownTemporary &&
-                                countdownTemporary !== state.countdown
-                            )
+                            if (countdownTemporary && countdownTemporary !== state.countdown)
                                 await dispatch({
                                     type: ActionKind.SetCountdown,
-                                    payload: { countdown: countdownTemporary },
+                                    payload: { countdown: countdownTemporary, setLocalConfig },
                                 });
 
                             restartGame();

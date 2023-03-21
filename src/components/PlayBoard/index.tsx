@@ -1,1 +1,1 @@
-export { default as PlayBoard } from "./PlayBoard";
+export { default } from "./PlayBoard";

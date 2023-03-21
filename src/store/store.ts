@@ -67,13 +67,15 @@ export const reducer = (state: State, action: Action): State => {
             };
         case ActionKind.AddCPMS:
             const { cpm } = payload;
+            const currentCPMS = state.characterPerMinutes;
 
             return {
                 ...state,
-                characterPerMinutes: [...state.characterPerMinutes, cpm],
+                characterPerMinutes: [...currentCPMS, cpm],
             };
         case ActionKind.SetCountdown:
             const { countdown } = payload;
+            payload.setLocalConfig({ ...state, countdown });
 
             return {
                 ...state,
@@ -81,6 +83,7 @@ export const reducer = (state: State, action: Action): State => {
             };
         case ActionKind.SetLanguage:
             const { language } = payload;
+            payload.setLocalConfig({ ...state, language });
 
             return {
                 ...state,
@@ -94,16 +97,10 @@ export const reducer = (state: State, action: Action): State => {
                 isPlaying: false,
                 isWrong: false,
                 showScore: false,
-                language:
-                    payload && payload.language
-                        ? payload.language
-                        : state.language,
+                language: payload && payload.language ? payload.language : state.language,
                 length: 30,
                 words: newWords,
-                countdown:
-                    payload && payload.countdown
-                        ? payload.countdown
-                        : state.countdown,
+                countdown: payload && payload.countdown ? payload.countdown : state.countdown,
                 characterPerMinutes: [],
                 wrongCount: 0,
             };

@@ -1,106 +1,45 @@
-import { Icons, Modal } from "@/components";
-import { useDisplayWords } from "@/hooks";
-import useTimer from "@/hooks/useTimer";
-import { Action, ActionKind, State } from "@/store/store";
-import {
-    ChangeEvent,
-    Dispatch,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from "react";
+import { Icons } from "@/components";
+import { Action, State } from "@/store/store";
+import { ChangeEvent, Dispatch, RefObject, SetStateAction } from "react";
 
 type PlayBoardProps = {
-    words: string;
     state: State;
-    dispatch: Dispatch<Action>;
+    displayWords: JSX.Element[];
+    countdown: number;
+    inputRef: RefObject<HTMLInputElement>;
+    rawInput: string;
+    onInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    setOpenRestartModal: Dispatch<SetStateAction<boolean>>;
+    setOpenSettingModal: Dispatch<SetStateAction<boolean>>;
+    setOnFocus: Dispatch<SetStateAction<boolean>>;
+    pauseTimer: () => void;
 };
 
-const PlayBoard: React.FC<PlayBoardProps> = ({ words, state, dispatch }) => {
-    const [
-        displayWords,
-        setDisplayWordsInput,
-        setOnFocus,
-        rawInput,
-        restartDisplayWords,
-    ] = useDisplayWords(words, "");
-    const inputRef = useRef<HTMLInputElement>(null);
-    const [openRestartModal, setOpenRestartModal] = useState(false);
-    const [openSettingModal, setOpenSettingModal] = useState(false);
-
+const PlayBoard: React.FC<PlayBoardProps> = ({
+    state,
+    displayWords,
+    countdown,
+    inputRef,
+    rawInput,
+    onInputChange,
+    setOnFocus,
+    setOpenRestartModal,
+    setOpenSettingModal,
+    pauseTimer,
+}) => {
     if (typeof window !== "undefined") {
         document.body.addEventListener("click", (ev) => {
             setOnFocus(false);
         });
     }
 
-    const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const rawInput = e.target.value;
-
-        if (!state.isPlaying) start();
-        if (rawInput.length === words.length) endGame();
-
-        if (rawInput[rawInput.length - 1] !== words[rawInput.length - 1]) {
-            dispatch({ type: ActionKind.SetIsWrong, payload: { bool: true } });
-            dispatch({ type: ActionKind.Increase_WrongCount });
-            return;
-        } else {
-            dispatch({ type: ActionKind.SetIsWrong, payload: { bool: false } });
-            setDisplayWordsInput(rawInput);
-        }
-    };
-
-    // start typing game
-    const start = () => {
-        dispatch({ type: ActionKind.TogglePlaying });
-        startTimer();
-    };
-
-    // end the game
-    const endGame = () => {
-        dispatch({ type: ActionKind.TogglePlaying });
-        dispatch({ type: ActionKind.ToggleShowScore });
-        inputRef.current!.value = "";
-    };
-
-    const [countdown, startTimer, resetTimer, pauseTimer] = useTimer(
-        state.countdown,
-        endGame
-    );
-
-    const restartGame = (timer?: number) => {
-        setOpenRestartModal(false);
-        if (inputRef.current) inputRef.current.value = "";
-        resetTimer(timer ? timer : state.countdown);
-        dispatch({
-            type: ActionKind.ResetState,
-            payload: { restart: restartDisplayWords },
-        });
-    };
-
-    useMemo(() => {
-        if (countdown - state.countdown === 0) return;
-        const cpm = parseInt(
-            (rawInput.length / ((state.countdown - countdown) / 60)).toFixed()
-        );
-        dispatch({ type: ActionKind.AddCPMS, payload: { cpm } });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [countdown]);
-
     if (!displayWords.length) return <></>;
 
     return (
         <div className="w-3/5 mx-auto">
             <div className="w-full flex justify-between">
-                <div className="text-xl text-white">
-                    wrong count : {state.wrongCount}
-                </div>
-                <span
-                    className={`text-xl px-2 ${
-                        countdown <= 5 ? "text-red-600" : "text-white"
-                    }`}
-                >
+                <div className="text-xl text-white">wrong count : {state.wrongCount}</div>
+                <span className={`text-xl px-2 ${countdown <= 5 ? "text-red-600" : "text-white"}`}>
                     {countdown}
                 </span>
             </div>
@@ -148,7 +87,7 @@ const PlayBoard: React.FC<PlayBoardProps> = ({ words, state, dispatch }) => {
                 </button>
                 <div></div>
             </div>
-            <Modal.ConfirmRestart
+            {/* <Modal.ConfirmRestart
                 isOpen={openRestartModal}
                 restartWordFunction={restartGame}
                 closeModalFunction={() => {
@@ -165,7 +104,7 @@ const PlayBoard: React.FC<PlayBoardProps> = ({ words, state, dispatch }) => {
                 dispatch={dispatch}
                 restartDisplayWords={restartDisplayWords}
                 resetTimer={resetTimer}
-            />
+            /> */}
         </div>
     );
 };

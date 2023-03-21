@@ -1,21 +1,14 @@
-import { Action, ActionKind, State } from "@/store/store";
-import { Dispatch, useState } from "react";
-import { Chart, Icons, Modal } from "@/components";
+import { Chart, Icons } from "@/components";
+import { State } from "@/store/store";
+import { Dispatch, SetStateAction } from "react";
 
 type ScoreBoardProps = {
     state: State;
-    dispatch: Dispatch<Action>;
+    restartGame: () => void;
+    setOpenSettingModal: Dispatch<SetStateAction<boolean>>;
 };
 
-const ScoreBoard: React.FC<ScoreBoardProps> = ({ dispatch, state }) => {
-    const [settingModal, setSettingModal] = useState(false);
-
-    const restartGame = async () => {
-        dispatch({
-            type: ActionKind.ResetState,
-        });
-    };
-
+const ScoreBoard: React.FC<ScoreBoardProps> = ({ state, restartGame, setOpenSettingModal }) => {
     return (
         <div className="mt-10  h-full">
             <Chart
@@ -48,7 +41,7 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ dispatch, state }) => {
                 <button
                     className="flex justify-center items-center h-16 w-16 2xl:h-20 2xl:w-20 bg-gray-700 rounded-lg hover:bg-opacity-75 border-2 border-gray-800 disabled:bg-gray-800"
                     onClick={() => {
-                        setSettingModal(true);
+                        setOpenSettingModal(true);
                     }}
                     disabled={state.isPlaying}
                 >
@@ -56,12 +49,12 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ dispatch, state }) => {
                 </button>
                 <div></div>
             </div>
-            <Modal.Setting
+            {/* <Modal.Setting
                 closeModalFunction={() => setSettingModal(false)}
                 isOpen={settingModal}
                 state={state}
                 dispatch={dispatch}
-            />
+            /> */}
         </div>
     );
 };
