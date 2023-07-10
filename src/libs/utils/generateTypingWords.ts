@@ -1,4 +1,4 @@
-export const generateTypingWords = (length = 20) => {
+export const generateTypingWords = (length = 20): string => {
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
 	const { default: vocabulary } = require("../../words/indonesia");
 	const vocab = vocabulary as string[];
