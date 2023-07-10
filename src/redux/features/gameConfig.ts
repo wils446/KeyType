@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Cookies } from "react-cookie";
 import { generateTypingWords } from "../../libs";
+import { RootState } from "../store";
 
 type GameConfigState = {
 	words: string;
@@ -67,3 +68,5 @@ export const {
 	setShowScore,
 	generateWords,
 } = gameConfig.actions;
+export const selectGameConfigState = (state: RootState) =>
+	state.gameConfigReducer;
