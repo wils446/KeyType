@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getCookie, setCookie } from "cookies-next";
+import { Cookies } from "react-cookie";
 import { generateTypingWords } from "../../libs";
 
 type GameConfigState = {
@@ -13,10 +13,11 @@ type GameConfigState = {
 };
 
 const initialState: () => GameConfigState = () => {
+	const cookie = new Cookies();
 	const language =
-		(getCookie("keytypeLanguage") as string | undefined) || "indonesia";
+		(cookie.get("keytypeLanguage") as string | undefined) || "indonesia";
 	const countdown = +(
-		(getCookie("keytypeCountdown") as string | undefined) || 30
+		(cookie.get("keytypeCountdown") as string | undefined) || 30
 	);
 
 	return {
@@ -38,8 +39,9 @@ export const gameConfig = createSlice({
 			state,
 			action: PayloadAction<{ countdown: 10 | 20 | 30 }>
 		) => {
+			const cookie = new Cookies();
 			const { countdown } = action.payload;
-			setCookie("keytypeCountdown", countdown);
+			cookie.set("keytypeCountdown", countdown);
 			state.countdown = countdown;
 		},
 		setIsPlaying: (state, action: PayloadAction<{ bool: boolean }>) => {
