@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Cookies } from "react-cookie";
-import { generateTypingWords } from "../../libs";
-import { RootState } from "../store";
+import { generateTypingWords } from "@/libs";
+import { RootState } from "@/redux/store";
 
 type GameConfigState = {
 	words: string;
@@ -55,7 +55,8 @@ export const gameConfig = createSlice({
 			state.showScore = action.payload.bool;
 		},
 		generateWords: (state) => {
-			state.words = generateTypingWords(state.length);
+			const length = state.length;
+			state.words = generateTypingWords(length);
 		},
 	},
 });
