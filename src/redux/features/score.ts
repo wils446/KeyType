@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
 type ScoreState = {
 	characterPerMinutes: number[];
@@ -34,3 +35,4 @@ export const score = createSlice({
 
 export const scoreReducer = score.reducer;
 export const { addCPMS, addWrongCount, resetScoreState } = score.actions;
+export const selectScoreState = (state: RootState) => state.scoreReducer;
