@@ -1,7 +1,5 @@
-export const generateTypingWords = (length = 20): string => {
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
-	const { default: vocabulary } = require("../../words/indonesia");
-	const vocab = vocabulary as string[];
+export const generateTypingWords = async (length = 20): Promise<string> => {
+	const { default: vocab } = await import("../../words/indonesia");
 	const words = [];
 
 	for (let i = 0; i < length; i++) {
