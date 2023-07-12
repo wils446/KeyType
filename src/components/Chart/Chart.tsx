@@ -95,7 +95,7 @@ export const Chart: React.FC<ChartProps> = ({ data }) => {
 				fill: true,
 			},
 		],
-		labels: Array.from({ length: data.length }, (v, index) => index + 1),
+		labels: Array.from({ length: data.length }, (_v, index) => index + 1),
 	};
 
 	return <Line options={options} data={chartData} />;
