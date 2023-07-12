@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Cookies } from "react-cookie";
-import { generateTypingWords } from "@/libs";
 import { RootState } from "@/redux/store";
 
 type GameConfigState = {
