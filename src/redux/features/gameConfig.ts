@@ -28,7 +28,7 @@ const initialState: () => GameConfigState = () => {
 		words: "",
 		language: language,
 		countdown: countdown,
-		length: 30,
+		length: 60,
 	};
 };
 
@@ -54,9 +54,8 @@ export const gameConfig = createSlice({
 		setShowScore: (state, action: PayloadAction<{ bool: boolean }>) => {
 			state.showScore = action.payload.bool;
 		},
-		generateWords: (state) => {
-			const length = state.length;
-			state.words = generateTypingWords(length);
+		setWords: (state, action: PayloadAction<{ words: string }>) => {
+			state.words = action.payload.words;
 		},
 	},
 });
@@ -67,7 +66,7 @@ export const {
 	setIsPlaying,
 	setIsWrong,
 	setShowScore,
-	generateWords,
+	setWords,
 } = gameConfig.actions;
 export const selectGameConfigState = (state: RootState) =>
 	state.gameConfigReducer;
