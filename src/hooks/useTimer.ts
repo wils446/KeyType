@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export const useTimer = (countdown: number, fn: () => void) => {
 	const [time, setTime] = useState(countdown);
 	const [timer, setTimer] = useState<NodeJS.Timeout>();
 
-	const startTimer = () => {
+	const startTimer = useCallback(() => {
 		setTimer(
 			setInterval(() => {
 				setTime((prev) => prev - 1);
 			}, 1000)
 		);
-	};
+	}, []);
 
-	const resetTimer = () => {
+	const resetTimer = useCallback(() => {
 		clearInterval(timer);
 		setTime(countdown);
-	};
+	}, [countdown, timer]);
 
 	useEffect(() => {
 		if (time != 0) return;
@@ -23,6 +23,7 @@ export const useTimer = (countdown: number, fn: () => void) => {
 		fn();
 
 		return () => clearInterval(timer);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [time]);
 
 	return { startTimer, time, resetTimer };

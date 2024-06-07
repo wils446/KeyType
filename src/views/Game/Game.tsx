@@ -1,4 +1,4 @@
-import { Button, TypingBoard } from "@/components";
+import { Button } from "@/components";
 import { useGenerateWords, useTimer } from "@/hooks";
 import {
 	addCPMS,
@@ -10,8 +10,9 @@ import {
 	setShowScore,
 } from "@/redux/features";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IoRefresh } from "react-icons/io5";
+import { TypingBoard } from "./components";
 
 export const Game = () => {
 	const { generateWords } = useGenerateWords();
@@ -29,32 +30,38 @@ export const Game = () => {
 		dispatch(setShowScore({ bool: true }));
 	});
 
-	const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { value } = e.target;
-
-		if (!isPlaying) start();
-		if (words[typingInput.length] !== value[value.length - 1]) {
-			dispatch(addWrongCount());
-			setIsWrong(true);
-			return;
-		}
-
-		setIsWrong(false);
-		setTypingInput(value);
-	};
-
-	const start = () => {
+	const start = useCallback(() => {
 		dispatch(setIsPlaying({ bool: true }));
 		startTimer();
-	};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
-	const restartButtonHandler = () => {
+	const restartButtonHandler = useCallback(() => {
 		generateWords();
 		resetTimer();
 		setTypingInput("");
 		dispatch(resetScoreState());
 		dispatch(setIsPlaying({ bool: false }));
-	};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	const onInputChange = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			const { value } = e.target;
+
+			if (!isPlaying) start();
+			if (words[typingInput.length] !== value[value.length - 1]) {
+				dispatch(addWrongCount());
+				setIsWrong(true);
+				return;
+			}
+
+			setIsWrong(false);
+			setTypingInput(value);
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[isPlaying, typingInput, words]
+	);
 
 	useEffect(() => {
 		if (countdown - time === 0) return;
@@ -62,6 +69,7 @@ export const Game = () => {
 			(typingInput.length / ((countdown - time) / 60)).toFixed()
 		);
 		dispatch(addCPMS({ cpm }));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [time]);
 
 	return (
