@@ -22,7 +22,7 @@ export const TypingBoard: React.FC<TypingBoardProps> = ({
 		return words.split("").map((char, index) => (
 			<span
 				key={index}
-				className={`decoration-white ${
+				className={`decoration-white duration-300 ${
 					isWrong && index === typingInput.length
 						? "text-red-500 decoration-red-500"
 						: index < typingInput.length
@@ -42,7 +42,7 @@ export const TypingBoard: React.FC<TypingBoardProps> = ({
 	return (
 		<>
 			<h1
-				className="font-mono text-2xl text-justify hover:cursor-text"
+				className="font-mono text-2xl tracking-widest hover:cursor-text"
 				onClick={() => {
 					inputEl.current?.focus();
 				}}
