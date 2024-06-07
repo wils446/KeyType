@@ -22,7 +22,7 @@ export const TypingBoard: React.FC<TypingBoardProps> = ({
 		return words.split("").map((char, index) => (
 			<span
 				key={index}
-				className={`decoration-white duration-300 ${
+				className={`decoration-white duration-100 ${
 					isWrong && index === typingInput.length
 						? "text-red-500 decoration-red-500"
 						: index < typingInput.length
@@ -30,25 +30,27 @@ export const TypingBoard: React.FC<TypingBoardProps> = ({
 						: "text-gray-500"
 				} ${
 					index === typingInput.length && isOnFocus
-						? "underline underline-offset-4"
+						? "bg-neutral-100"
 						: ""
 				} `}
 			>
-				{char}
+				{char || " "}
 			</span>
 		));
 	}, [typingInput, isWrong, words, isOnFocus]);
 
 	return (
 		<>
-			<h1
-				className="font-mono text-2xl tracking-widest hover:cursor-text"
-				onClick={() => {
-					inputEl.current?.focus();
-				}}
-			>
-				{displayWords}
-			</h1>
+			<div className="relative">
+				<h1
+					className="font-mono text-2xl tracking-widest hover:cursor-text z-50 relative"
+					onClick={() => {
+						inputEl.current?.focus();
+					}}
+				>
+					{displayWords}
+				</h1>
+			</div>
 			<input
 				type="text"
 				className="opacity-0 w-0 h-0"
